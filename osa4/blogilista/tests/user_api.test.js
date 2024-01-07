@@ -25,6 +25,7 @@ describe('when there is initially one user at db', () => {
         username: 'mluukkai',
         name: 'Matti Luukkainen',
         password: 'salainen',
+        
       }
   
       await api
@@ -60,10 +61,54 @@ describe('when there is initially one user at db', () => {
         const usersAtEnd = await helper.usersInDb()
         expect(usersAtEnd).toHaveLength(usersAtStart.length)
     })
+
+    
+})
+
+describe('user created', () => {
+    beforeEach(async () => {
+        await User.deleteMany({})
+
+        const passwordHash = await bcrypt.hash('secret', 10)
+        const user = new User({ username: 'root', passwordHash })
+
+        await user.save()
+    })
+
+    test('fails is username < 3', async () => {
+        const newUser = {
+            username: 'mi',
+            name: 'miau',
+            password: 'kiskas',
+        }
+
+        const result = await api
+            .post('/api/users')
+            .send(newUser)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+
+        expect(result.body.error).toContain('username must be min 3 length')
+    })
+
+    test('fails is password < 3', async () => {
+        const newUser = {
+            username: 'emmaemma',
+            name: 'Emma',
+            password: 'et',
+        }
+
+        const result = await api
+            .post('/api/users')
+            .send(newUser)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+
+        expect(result.body.error).toContain('password must be min 3 length')
+    })
 })
 
 
-
 afterAll(async () => {
-await mongoose.connection.close()
+    await mongoose.connection.close()
 })

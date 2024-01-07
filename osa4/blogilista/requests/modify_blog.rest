@@ -3,6 +3,6 @@ PUT http://localhost:3003/api/blogs
   "title": "Ada Lovelace",
   "author": "37463856784365",
   "url": "https://fullstackopen.com/osa4/sovelluksen_rakenne_ja_testauksen_alkeet#tehtavat-4-1-4-2",
-  "likes": 888,
+  "likes": 88668,
   "id": "6599ff07e383dff9e2b30da5"
 }

@@ -3,6 +3,9 @@ const supertest = require('supertest')
 const app = require('../App')
 const Blog = require('../models/blog')
 const helper = require('./test_helper')
+const bcrypt = require('bcrypt')
+const User = require('../models/user')
+
 
 
 beforeEach(async () => {
