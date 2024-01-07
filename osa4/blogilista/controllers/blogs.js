@@ -9,12 +9,16 @@ blogsRouter.get('/', async (request, response) => {
 
 blogsRouter.post('/', async (request, response, next) => {
   const body = request.body
+  if (body.title === undefined) {
+    return response.status(400).json({ error: "Missing title" })
+  } else if (body.url === undefined) {
+    return response.status(400).json({ error: "Missing url" })}
 
   const blog = new Blog({
     title: body.title,
     author: body.author,
     url: body.url,
-    likes: body.likes
+    likes: body.likes || 0
   })
 
     const savedblog = await blog.save({})
