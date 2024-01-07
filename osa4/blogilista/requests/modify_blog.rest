@@ -1,9 +1,8 @@
- 
 PUT http://localhost:3003/api/blogs
- {
-    "title": "Go To Statement Considered Harmful",
-    "author": "Edsger W. Dijkstra",
-    "url": "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
-    "likes": 105,
-    "id": "5a422aa71b54a676234d17f8"
-  }
+{
+  "title": "Ada Lovelace",
+  "author": "37463856784365",
+  "url": "https://fullstackopen.com/osa4/sovelluksen_rakenne_ja_testauksen_alkeet#tehtavat-4-1-4-2",
+  "likes": 888,
+  "id": "6599ff07e383dff9e2b30da5"
+}

@@ -1,1 +1,1 @@
-DELETE http://localhost:3003/api/6599fbf40ba5310191b00dc2
+DELETE http://localhost:3003/api/blogs/6599ff07e383dff9e2b30da5

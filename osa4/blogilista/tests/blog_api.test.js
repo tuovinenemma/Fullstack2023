@@ -4,6 +4,7 @@ const app = require('../App')
 const Blog = require('../models/blog')
 const helper = require('./test_helper')
 
+
 beforeEach(async () => {
   await Blog.deleteMany({})
   let blogObject = new Blog(helper.initialBlogs[0])
@@ -137,6 +138,9 @@ test('there are correct amount of blogs', async () => {
     const response = await api.get('/api/blogs')
     expect(response.body).toHaveLength(helper.initialBlogs.length)
 })
+
+
+
 
 afterAll(async () => {
   await mongoose.connection.close()
