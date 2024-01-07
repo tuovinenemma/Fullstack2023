@@ -104,6 +104,28 @@ describe('deletion of a blog', () => {
     })
  })
 
+test('blog is modified', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToModify = blogsAtStart[0]
+    const blogId = blogToModify.id
+
+    const modifiedBlog = {
+        title: 'Katinkulta',
+        author: 'Kati'
+    }
+
+    await api
+        .put(`/api/blogs/${blogId}`)
+        .send(modifiedBlog)
+        .expect(200)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(blogsAtStart.length)
+
+    const titles = blogsAtStart.map(r => r.title)
+    expect(titles).toContain(blogToModify.title)
+})
+
 test('blogs are returned as json', async () => {
   await api
     .get('/api/blogs')
