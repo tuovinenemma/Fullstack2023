@@ -33,11 +33,11 @@ const Blog = ({ blog, addLike, deleteBlog, user }) => {
     ? 'hide' : 'view'
 
   return (
-    <div style={blogStyle}>
+    <li className="blog" style={blogStyle}>
       {blog.title} {blog.author}
       <button onClick={changeStatus}>{label}</button>
       {state === true ? showAll() : null}
-    </div>
+    </li>
   )}
 
 Blog.propTypes = {

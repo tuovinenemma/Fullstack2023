@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
+import Error from './components/Error'
 import Footer from './components/Footer'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -41,8 +42,20 @@ const App = () => {
     blogFormRef.current.toggleVisibility()
     blogService
       .create(blogObject)
-      .then(returnedBlog => {
-        setBlogs(blogs.concat(returnedBlog))
+      .then(() => {
+        blogService.getAll().then(initialBlogs => {
+          setBlogs(initialBlogs)
+        })
+        setNotification(`Added ${blogObject.title} by ${blogObject.author}!`)
+        setTimeout(() => {
+          setNotification(null)
+        }, 5000)
+      })
+      .catch(error => {
+        setErrorMessage('title or url missing')
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
       })
   }
 
@@ -119,6 +132,7 @@ const App = () => {
       <div>
         username
         <input
+          id='username'
           type="text"
           value={username}
           name="Username"
@@ -128,13 +142,16 @@ const App = () => {
       <div>
         password
         <input
+          id='password'
           type="password"
           value={password}
           name="Password"
           onChange={({ target }) => setPassword(target.value)}
         />
       </div><p></p>
-      <button type="submit">login</button>
+      <button id="login-button" type="submit">          
+        login
+      </button>
     </form>
   )
 
@@ -142,7 +159,9 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={errorMessage} />
+      <Error message={errorMessage} />
+      <Notification message={notification} />
+      
       {user === null ?
         loginForm() :
         <div>
