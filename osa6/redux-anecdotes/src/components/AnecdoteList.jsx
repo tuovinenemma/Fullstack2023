@@ -6,29 +6,29 @@ const Anecdotes = () => {
   const dispatch = useDispatch()
   const anecdotes = useSelector(({ filter, anecdotes }) => {
     return anecdotes.filter(anecdote => anecdote.content.toLowerCase().includes(filter.toLowerCase()))
-})
+  })
 
-  const handleVote = (id, content) => {
-    console.log('Vote', id)
+  const vote = (id, content) => {
     dispatch(voteAnecdote(id))
     dispatch(createNotification(`you voted '${content}'`))
   }
 
   return (
     <div>
-      <br/>
-      {anecdotes.sort((a, b) => b.votes - a.votes).map(anecdote =>
+      {anecdotes.map(anecdote =>
         <div key={anecdote.id}>
           <div>
             {anecdote.content}
           </div>
           <div>
             has {anecdote.votes}
-            <button onClick={() => handleVote(anecdote.id, anecdote.content)}>vote</button>
+            <button onClick={() => vote(anecdote.id, anecdote.content)}>vote</button>
           </div>
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   )
 }
+
 export default Anecdotes
